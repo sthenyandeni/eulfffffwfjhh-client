@@ -1,0 +1,22 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "start": "serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sthenyandeni/eulfffffwfjhh-client.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sthenyandeni/eulfffffwfjhh-client/issues"
+  },
+  "homepage": "https://github.com/sthenyandeni/eulfffffwfjhh-client#readme",
+  "dependencies": {
+    "serve": "^13.0.2"
+  }
+}

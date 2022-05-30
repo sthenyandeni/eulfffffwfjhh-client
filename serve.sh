@@ -1,3 +1,3 @@
 #! /bin/bash
 
-http-server ./ --ssl --cert ./localhost.pem --key ./localhost-key.pem
+http-server ./public --ssl --cert ./localhost.pem --key ./localhost-key.pem
