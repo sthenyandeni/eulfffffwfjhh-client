@@ -1,9 +1,9 @@
 const SERVER_URL = 'https://eulfffffwfjhh-server.herokuapp.com/'
+// const SERVER_URL = 'http://localhost:3000/'
 
 const makeScoreCard = (place, title, score) => {
-    return $("<div>", {'class': 'card mb-2'})
-        .append($("<div>", {'class': 'card-body py-1'})
-            .append([
+    return $("<div>", {'class': 'card mb-2'}).append(
+        $("<div>", {'class': 'card-body py-1'}).append([
                 $("<h3>", {'class': 'd-inline me-4'}).text(`#${place}`),
                 $("<h3>", {'class': 'd-inline'}).text(title),
                 $("<h3>", {'class': 'd-inline float-end'}).text(`${score} Points`)
@@ -13,8 +13,9 @@ const makeScoreCard = (place, title, score) => {
 
 const initScoreboard = () => {
     $("body").append(
-        $("<div>", {'class': 'row'})
-            .append($("<div>", {'class': 'list-group col-5', 'id': 'scoreboard'}))
+        $("<div>", {'class': 'row'}).append(
+            $("<div>", {'class': 'list-group col-5', 'id': 'scoreboard'})
+        )
     )
 }
 
@@ -35,20 +36,36 @@ const main = () => {
     }
 
     const poll = () => {
-        fetch(`${SERVER_URL}${game}`).then((response) => response.json()).then(data => {
-            console.log(data)
-            // data = [
-            //     {title: "Team 1", score: 100},
-            //     {title: "Team 2", score: 90},
-            //     {title: "Team 3", score: 80},
-            //     {title: "Team 4", score: 70},
-            //     {title: "Team 5", score: 60},
-            //     {title: "Team 6", score: 50},
-            // ]
-            $("#scoreboard").append(
-                data.map((item, index) => makeScoreCard(index + 1, item.title, item.score))
-            )
-        })
+        fetch(`${SERVER_URL}${game}`)
+            .then((response) => {
+                if (!response.status == 200)
+                    return Promise.reject(response.status)
+                return response.json()
+            })
+            .then(data => {
+                console.log(data)
+                // data = [
+                //     {title: "Team 1", score: 100},
+                //     {title: "Team 2", score: 90},
+                //     {title: "Team 3", score: 80},
+                //     {title: "Team 4", score: 70},
+                //     {title: "Team 5", score: 60},
+                //     {title: "Team 6", score: 50},
+                // ]
+                $("#scoreboard").append(
+                    data.map((item, index) => makeScoreCard(index + 1, item.title, item.score))
+                )
+            })
+            .catch(err => {
+                console.log(`Server Error: ${err}`)
+                $("#scoreboard").empty().append(
+                    $("<div>", {'class': 'card mb-2'}).append(
+                        $("<div>", {'class': 'card-body py-1'}).append(
+                            $("<h3>", {'class': 'text-center'}).text("No scores yet")
+                        )
+                    )
+                )
+            })
     }
     
     setInterval(poll, 3000)
