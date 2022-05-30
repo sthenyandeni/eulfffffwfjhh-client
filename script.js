@@ -52,7 +52,7 @@ const main = () => {
                 //     {title: "Team 5", score: 60},
                 //     {title: "Team 6", score: 50},
                 // ]
-                $("#scoreboard").append(
+                $("#scoreboard").empty().append(
                     data.map((item, index) => makeScoreCard(index + 1, item.title, item.score))
                 )
             })
