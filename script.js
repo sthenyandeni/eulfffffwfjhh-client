@@ -1,3 +1,5 @@
+const SERVER_URL = 'https://eulfffffwfjhh-server.herokuapp.com/'
+
 const makeScoreCard = (place, title, score) => {
     return $("<div>", {'class': 'card mb-2'})
         .append($("<div>", {'class': 'card-body py-1'})
@@ -33,16 +35,16 @@ const main = () => {
     }
 
     const poll = () => {
-        fetch(`http://localhost:8912/${game}`).then((response) => response.json()).then(data => {
+        fetch(`${SERVER_URL}${game}`).then((response) => response.json()).then(data => {
             console.log(data)
-            data = [
-                {title: "Team 1", score: 100},
-                {title: "Team 2", score: 90},
-                {title: "Team 3", score: 80},
-                {title: "Team 4", score: 70},
-                {title: "Team 5", score: 60},
-                {title: "Team 6", score: 50},
-            ]
+            // data = [
+            //     {title: "Team 1", score: 100},
+            //     {title: "Team 2", score: 90},
+            //     {title: "Team 3", score: 80},
+            //     {title: "Team 4", score: 70},
+            //     {title: "Team 5", score: 60},
+            //     {title: "Team 6", score: 50},
+            // ]
             $("#scoreboard").append(
                 data.map((item, index) => makeScoreCard(index + 1, item.title, item.score))
             )
