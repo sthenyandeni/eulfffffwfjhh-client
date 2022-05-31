@@ -94,7 +94,7 @@ const main = () => {
     });
 
     let page = params.page
-    if (game == null || page == "") {
+    if (page == null || page == "") {
         $("body").append(
             $("<h4>").text("Please enter the page on the ?page parameter")
         )
