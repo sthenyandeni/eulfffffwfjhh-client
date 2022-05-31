@@ -37,7 +37,7 @@ const scoreboard = (game) => {
             })
             .then(data => {
                 $("#scoreboard").empty().append(
-                    data.map((item, index) => makeScoreCard(index + 1, item.title, item.score))
+                    data.map((item, index) => makeScoreCard(index + 1, item.name, item.score))
                 )
             })
             .catch(err => {
