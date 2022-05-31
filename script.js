@@ -11,29 +11,22 @@ const makeScoreCard = (place, title, score) => {
         )
 }
 
-const initScoreboard = () => {
+const makeTeamCard = (teamName) => {
+    return $("<div>", {'class': 'col-4'}).append(
+        $("<div>", {'class': 'card mb-3 me-1'}).append(
+            $("<div>", {'class': 'card-body py-1'}).append(
+                $("<h3>", {'class': 'text-center'}).text(teamName)
+            )
+        )
+    )
+}
+
+const scoreboard = (game) => {
     $("body").append(
         $("<div>", {'class': 'row'}).append(
             $("<div>", {'class': 'list-group col-5', 'id': 'scoreboard'})
         )
     )
-}
-
-const main = () => {   
-    initScoreboard() 
-
-    const params = new Proxy(new URLSearchParams(window.location.search), {
-        get: (target, prop) => target.get(prop)
-    });
-    let game = params.game
-
-    if (game == null || game == "") {
-        $("body").append(
-            $("<h4>").text("Don't forget the game query in the URL"),
-            $("<h5>").text("It should look like: ?game=game_name")
-        )
-        return
-    }
 
     const poll = () => {
         fetch(`${SERVER_URL}${game}`)
@@ -43,15 +36,6 @@ const main = () => {
                 return response.json()
             })
             .then(data => {
-                console.log(data)
-                // data = [
-                //     {title: "Team 1", score: 100},
-                //     {title: "Team 2", score: 90},
-                //     {title: "Team 3", score: 80},
-                //     {title: "Team 4", score: 70},
-                //     {title: "Team 5", score: 60},
-                //     {title: "Team 6", score: 50},
-                // ]
                 $("#scoreboard").empty().append(
                     data.map((item, index) => makeScoreCard(index + 1, item.title, item.score))
                 )
@@ -66,9 +50,78 @@ const main = () => {
                     )
                 )
             })
-    }
-    
+    }  
     setInterval(poll, 3000)
+}
+
+const teams = () => {
+    $("body").empty().append(
+        $("<div>", {'class': 'row', 'id': 'teams'})
+    )
+    const poll = () => {
+        fetch(`${SERVER_URL}team_names`)
+            .then((response) => {
+                if (!response.status == 200)
+                    return Promise.reject(response.status)
+                return response.json()
+            })
+            .then(data => {
+                $("#teams").empty().append(
+                    data.map(team => makeTeamCard(team))
+                )
+            })
+            .catch(err => {
+                console.log(`Server Error: ${err}`)
+                $("#teams").empty().append(
+                    $("<div>", {'class': 'card mb-2'}).append(
+                        $("<div>", {'class': 'card-body py-1'}).append(
+                            $("<h3>", {'class': 'text-center'}).text("No teams yet")
+                        )
+                    )
+                )
+            })
+    }
+    setInterval(poll, 3000)
+}
+
+const winners = () => {
+
+}
+
+const main = () => {   
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (target, prop) => target.get(prop)
+    });
+
+    let page = params.page
+    if (game == null || page == "") {
+        $("body").append(
+            $("<h4>").text("Please enter the page on the ?page parameter")
+        )
+        return;
+    }
+    else if (page == "game") {
+        let game = params.game;
+
+        if (game == null || game == "") {
+            $("body").append(
+                $("<h4>").text("Please enter the game on the ?game parameter")
+            )
+            return;
+        }
+        scoreboard(game)
+    }
+    else if (page == "teams") {
+        teams()
+    }
+    else if (page == "winners") {
+        winners()
+    }
+    else {
+        $("body").empty().append(
+            $("<h4>").text("This page does not exists, enter either 'game', 'teams' or 'winners'")
+        )
+    }
 }
 
 $(document).ready(main)
