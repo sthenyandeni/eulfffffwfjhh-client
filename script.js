@@ -102,6 +102,31 @@ const leaderboard = () => {
         $("<div>", {'class': 'row', 'id': 'leaderboard'})
         )
     )
+
+    const poll = () => {
+        fetch(`${SERVER_URL}leaderboard`)
+            .then((response) => {
+                if (!response.status == 200)
+                    return Promise.reject(response.status)
+                return response.json()
+            })
+            .then(data => {
+                $("#leaderboard").empty().append(
+                    data.map((item, index) => makeScoreCard(index + 1, item.name, item.score))
+                )
+            })
+            .catch(err => {
+                console.log(`Server Error: ${err}`)
+                $("#leaderboard").empty().append(
+                    $("<div>", {'class': 'card mb-2 shadow'}).append(
+                        $("<div>", {'class': 'card-body py-1'}).append(
+                            $("<h3>", {'class': 'text-center'}).text("No scores yet")
+                        )
+                    )
+                )
+            })
+    }
+    setInterval(poll, 5000)
 }
 
 const winners = () => {
