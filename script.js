@@ -3,8 +3,9 @@ const SERVER_URL = 'https://cd00-196-36-112-50.eu.ngrok.io/'
 // const SERVER_URL = 'http://localhost:3000/'
 
 const makeScoreCard = (place, title, score) => {
-    return $("<div>", {'class': 'card mb-2 shadow border-primary'}).append(
-        $("<div>", {'class': 'card-body py-1 '}).append([
+    return $("<div>", {'class': 'card mb-2 shadow border-primary has-bg-img'}).append(
+        $("<div>", {'class': 'card-body py-1 '})
+        .append([
                 $("<h3>", {'class': 'd-inline me-4'}).text(`#${place}`),
                 $("<h3>", {'class': 'd-inline'}).text(title),
                 $("<h3>", {'class': 'd-inline float-end'}).text(`${score} Points`)
@@ -14,7 +15,11 @@ const makeScoreCard = (place, title, score) => {
 
 const makeTeamCard = (teamName) => {
     return $("<div>", {'class': 'col-4'}).append(
-        $("<div>", {'class': 'card mb-3 me-1 shadow border-primary'}).append(
+        $("<div>", {'class': 'card mb-3 me-1 shadow border-primary has-bg-img'})
+            .append(
+                $("<img>", {'class': 'bg-img', 'src':'flags/1.jpg', 'alt':'1'})
+            )
+            .append(
             $("<div>", {'class': 'card-body py-1'}).append(
                 $("<h3>", {'class': 'text-center'}).text(teamName)
             )
@@ -76,6 +81,7 @@ const teams = () => {
                 return response.json()
             })
             .then(data => {
+                console.log(data)
                 $("#teams").empty().append(
                     data.map(team => makeTeamCard(team))
                 )
