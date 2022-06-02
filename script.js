@@ -1,5 +1,5 @@
-// const SERVER_URL = 'https://eulfffffwfjhh-server.herokuapp.com/'
-const SERVER_URL = 'https://cd00-196-36-112-50.eu.ngrok.io/'
+const SERVER_URL = 'https://eulfffffwfjhh-server.herokuapp.com/'
+// const SERVER_URL = 'https://cd00-196-36-112-50.eu.ngrok.io/'
 // const SERVER_URL = 'http://localhost:3000/'
 
 const makeScoreCard = (place, title, score) => {
