@@ -21,7 +21,7 @@ const makeTeamCard = (team) => {
             //)
             .append(
             $("<div>", {'class': 'card-body py-1'}).append(
-                $("<h3>", {'class': 'text-center'}).text(team.name)
+                $("<h1>", {'class': 'text-center'}).text(team.name)
             )
         )
     )
