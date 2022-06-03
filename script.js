@@ -16,9 +16,9 @@ const makeScoreCard = (place, title, score) => {
 const makeTeamCard = (team) => {
     return $("<div>", {'class': 'col-4'}).append(
         $("<div>", {'class': 'card mb-3 me-1 shadow border-primary has-bg-img'})
-            .append(
-                $("<img>", {'class': 'bg-img', 'src':`flags/${team.number}.jpg`, 'alt':`${team.number}`})
-            )
+            //.append(
+            //    $("<img>", {'class': 'bg-img', 'src':`flags/${team.number}.jpg`, 'alt':`${team.number}`})
+            //)
             .append(
             $("<div>", {'class': 'card-body py-1'}).append(
                 $("<h3>", {'class': 'text-center'}).text(team.name)
